@@ -1,8 +1,8 @@
 import xmlrpc.client  # library
-url = "https://eassist-staging-5057826.dev.odoo.com"  # url database instance
-db = "eassist-staging-5057826"  # name database
+url = "https://eassist-staging-5970392.dev.odoo.com"  # url database instance
+db = "eassist-staging-5970392"  # name database
 username = "admin"  # name user
-password = "aW#55fj@skkf"  # pass user
+password = "Acer45300"  # pass user
 
 common = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url))
 uid = common.authenticate(db, username, password, {})  # login
@@ -43,26 +43,36 @@ print(partners)
 # print(partners)
 #    partners = [partners]
 
+
+# Create Sale User
+
+new_user = models.execute_kw(db, uid, password, 'res.users', 'create', [{
+    'name': 'Oscar Morocho',  # User name
+    'login': 'oscar.morocho@esystems.ec',  # User Email
+    'lang': "es_EC",
+}])
+
 # With the obtained partner we can create an invoice
 
-print(partners[0].get('id'))
-new_invoice = models.execute_kw(db, uid, password, 'account.move', 'create', [{
-    'state': "draft",
-    'partner_id': partners[0].get('id'),  # Customer ID
-    'move_type': 'out_invoice',
-    'l10n_ec_sri_payment_id': 7,
-    'invoice_line_ids': [
-        # First line of Order Lines
-        (0, 0, {
-            'product_id': 3,  # insert product ID
-            'quantity': 20,  # insert product qty
-            'price_unit': 10.9,
-            # 'discount' : desiredDisc,
-            # 'tax_id': taxID,
-        }
-        ),
-    ],
-}])
+# print(partners[0].get('id'))
+# new_invoice = models.execute_kw(db, uid, password, 'account.move', 'create', [{
+#    'state': "draft",
+#    'partner_id': partners[0].get('id'),  # Customer ID
+#    'move_type': 'out_invoice',
+#    'l10n_ec_sri_payment_id': 7,
+#    'sale_user': new_user[0].get('id'),
+#    'invoice_line_ids': [
+#        # First line of Order Lines
+#        (0, 0, {
+#            'product_id': 3,  # insert product ID
+#            'quantity': 100,  # insert product qty
+#            'price_unit': 5.5,
+#            # 'discount' : desiredDisc,
+#            # 'tax_id': taxID,
+#        }
+#        ),
+#    ],
+# }])
 
 # Create a payment
 
